@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from .forms import MalwareForm
+from .models import Malware
+from .scraper import simple_search
 
 malwares = {
     "Trojan.SH.KERBERDS.A" : 
@@ -97,4 +100,28 @@ malwares = {
 
 # Create your views here.
 def index(request):
-    return render(request, 'analyst/index.html', context={"malwares":malwares})
+    
+    return render(request, 'analyst/index.html')
+
+def search(request):
+    print('search called')
+    query = request.GET.get("query")
+    print(query)
+    malware = Malware.objects.filter(name__contains=query)
+    if not malware:
+        # scrape data
+        malware_data = simple_search(query)
+        malware = {'name': query, 'data': malware_data}
+
+    print(malware)
+    return render(request, 'analyst/malware.html', {"malware" : malware})
+
+def update(request):
+    if request.POST:
+        print(request.POST)
+
+        form = MalwareForm(request.POST)
+
+        form.save()
+
+    return render(request, 'analyst/index.html')

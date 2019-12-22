@@ -7,11 +7,12 @@
 </head>
 <body>
     <h1>Malware information</h1>
-    {% for name, values in malwares.items %}
-        <p>{{ name }}</p>
-        {% for k, v in values.items %}
-            <p>{{ k }} : {{ v }}</p>
-        {% endfor %}
-    {% endfor %}
+
+    <h2>Search for malware</h2>
+    <form action="malware" method="GET">
+        <label for="search">Search</label>
+        <input type="text" name="query">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
