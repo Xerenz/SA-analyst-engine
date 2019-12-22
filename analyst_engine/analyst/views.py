@@ -3,6 +3,8 @@ from .forms import MalwareForm
 from .models import Malware
 from .scraper import simple_search
 
+# dummy data to test views
+
 malwares = {
     "Trojan.SH.KERBERDS.A" : 
     {
